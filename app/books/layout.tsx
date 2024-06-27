@@ -1,14 +1,29 @@
-import React, { ReactNode } from "react";
+'use client'
+
+import React, { ReactNode, useEffect, useState } from "react";
 
 export default function DashboardLayout({
-    children, // will be a page or nested layout
-}: {
-    children: ReactNode;
-}) {
+    children,
+}: Readonly<{
+    children: React.ReactNode;
+}>) {
+    
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, []);
+
+    if (!isMounted) {
+        return null;
+    }
+
     return (
-        <section>
-            {/* Include shared UI here e.g. a header or sidebar */}
-            {children}
-        </section>
+        <html lang="en">
+            <body>
+                {/* Include shared UI here e.g. a header or sidebar */}
+                {children}
+            </body>
+        </html>
     );
 }
