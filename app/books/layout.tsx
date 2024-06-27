@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { ReactNode, useEffect, useState } from "react";
 
@@ -7,11 +7,10 @@ export default function DashboardLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
-        setIsMounted(true)
+        setIsMounted(true);
     }, []);
 
     if (!isMounted) {
@@ -19,11 +18,9 @@ export default function DashboardLayout({
     }
 
     return (
-        <html lang="en">
-            <body>
-                {/* Include shared UI here e.g. a header or sidebar */}
-                {children}
-            </body>
-        </html>
+        <div>
+            {/* Include shared UI here e.g. a header or sidebar */}
+            {children}
+        </div>
     );
 }

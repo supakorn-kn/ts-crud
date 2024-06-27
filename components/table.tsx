@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 const btnClassName = `table-auto p-1 rounded border border-white hover:bg-white hover:text-black transition duration-200 ease-in`;
 const tableClassName = `border-collapse border border-slate-400 w-full`;
 const tableHeadContentClassName = `border uppercase text-gray-300 border-slate-500 bg-slate-600`;
@@ -13,8 +15,8 @@ type TableProp = {
             [dataKey: string]: string;
         };
     };
-    onEdit?: (data: any) => {};
-    onDelete?: (data: any) => {};
+    onEdit?: (data: any) => void;
+    onDelete?: (data: any) => void;
 };
 
 export default function Table({
@@ -24,6 +26,11 @@ export default function Table({
     onEdit,
     onDelete,
 }: TableProp) {
+
+    if (data.length === 0) {
+        return null
+    }
+
     const { primary_header, header_orders, name } = table;
 
     const headRows = [];
@@ -47,17 +54,20 @@ export default function Table({
         const keyPrefix = d[primary_header];
         const rowData = [];
         for (const key of header_orders) {
-            rowData.push(<td key={`${keyPrefix}-${key}`}>{d[key]}</td>);
+            rowData.push(
+                <td className="p-2" key={`${keyPrefix}-${key}`}>
+                    {d[key]}
+                </td>
+            );
         }
+
         rowData.push(
-            <td key={`${keyPrefix}-action`}>
-                <button
+            <td className="p-2" key={`${keyPrefix}-action`}>
+                 <button
                     className={btnClassName}
                     onClick={(evt) => {
                         evt.preventDefault();
-                        if (onEdit) {
-                            onEdit(d);
-                        }
+                        onEdit? onEdit(d) : null
                     }}
                 >
                     Edit
@@ -66,9 +76,7 @@ export default function Table({
                     className={btnClassName}
                     onClick={(evt) => {
                         evt.preventDefault();
-                        if (onDelete) {
-                            onDelete(d);
-                        }
+                        onDelete? onDelete(d) : null
                     }}
                 >
                     Delete
@@ -76,7 +84,7 @@ export default function Table({
             </td>
         );
         bodyRows.push(
-            <tr className={tableBodyContentClassName} key={d[primary_header]}>
+            <tr className={tableBodyContentClassName} key={`row-${keyPrefix}}`}>
                 {rowData}
             </tr>
         );
