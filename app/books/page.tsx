@@ -56,7 +56,7 @@ function generateBook(): Book {
     };
 }
 
-export default function Page() {
+export default function BookPage() {
     const [bookData, setData] = useState(initialDataList);
 
     function addData() {

@@ -2,7 +2,7 @@
 
 import React, { ReactNode, useEffect, useState } from "react";
 
-export default function DashboardLayout({
+export default function BookLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
